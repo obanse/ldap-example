@@ -62,7 +62,7 @@ exports.getAllUsers = (req, res) => {
               'floor':        entry.object.postOfficeBox,
               'postalCode':   entry.object.postalCode,
               'city':         entry.object.l,
-              'authority':    entry.object.company,
+              'company':      entry.object.company,
               'department':   entry.object.department,
               'position':     entry.object.title,
               'manager':      entry.object.manager
