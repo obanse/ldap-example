@@ -20,7 +20,8 @@ const normalizePort = val => {
 };
 
 const onError = (err) => {
-  if (err.syscall !== 'listen') {
+  console.error('Error::: ' + err);
+  if (err.syscall !== 'listen' || err.syscall !== 'read') {
     throw err;
   }
 
@@ -36,6 +37,10 @@ const onError = (err) => {
       console.error(bind + " is already in use");
       process.exit(1);
       break;
+    case "ECONNRESET":
+      console.error(bind + " the other side has closed TCP conversation abruptly");
+      process.exit(1);
+      break;
     default:
       throw err;
   }
@@ -44,13 +49,13 @@ const onError = (err) => {
 const onListening = () => {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
-  debug("Listening on " + bind);
+  console.log("Listening on " + bind);
 };
 
 const port = normalizePort(process.env.PORT_BACKEND || "80");
 app.set('port', port);
 
 const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
+server.on('error', onError);
+server.on('listening', onListening);
 server.listen(port);

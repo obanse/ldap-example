@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const LdapController = require('../controllers/ldap');
+const LdapController = require('../controllers/ad-user');
 
 // TODO: const checkAuth = require('../middleware/check-auth');
 

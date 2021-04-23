@@ -1,6 +1,6 @@
-const ldap = require('ldapjs');
+const adUser = require('ldapjs');
 
-const client = ldap.createClient({
+const client = adUser.createClient({
   url: [
     'ldap://'+ process.env.DC1 +':389',
     'ldap://'+ process.env.DC2 +':389'
@@ -79,7 +79,6 @@ exports.getAllUsers = (req, res) => {
           result.on('end', (result) => {
             console.log('status: ' + result.status);
             res.status(200).json({
-              message: 'Found ' + mappedObjectArray.length + ' objects',
               results: mappedObjectArray
             });
           });
