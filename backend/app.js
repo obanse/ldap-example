@@ -22,6 +22,7 @@ sequelize.sync()
     console.log("All models were synchronized successfully.");
   });
 
+// TODO: synchronize AD to save users to db
 const user = AdUser.create({
   sAMAccountName: 'user_sAMAccountName'
 }).then((user) => {
