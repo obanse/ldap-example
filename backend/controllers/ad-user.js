@@ -1,4 +1,8 @@
 const adUser = require('ldapjs');
+const {UniqueConstraintError} = require("sequelize");
+
+// define models
+const AdUser = require('../models/ad-user');
 
 const client = adUser.createClient({
   url: [
@@ -22,6 +26,7 @@ exports.getAllUsers = (req, res) => {
         filter: '(&(objectClass=user)(!(objectClass=computer)))',
         scope: 'sub',
         attributes: [
+          'objectSid',
           'cn',
           'sAMAccountName',
           'sn',
@@ -79,19 +84,33 @@ exports.getAllUsers = (req, res) => {
           result.on('end', (result) => {
             console.log('status: ' + result.status);
             res.status(200).json({
-              results: mappedObjectArray
+              users: mappedObjectArray
             });
           });
-
         }
-
       });
-
-
     }
-
-
   });
 
+  // TODO: remove - only for testing
+  createUser();
 
 };
+
+function createUser() {
+
+  // TODO: synchronize AD to save users to db
+  AdUser.create({
+    objectSid: 'S-1-55-sdfjdslfhsdkljhf',
+    sAMAccountName: 'user_sAMAccountName'
+  }).then(user => {
+    console.log("something happened?");
+    console.log("ID:: " + user.id);
+  }).catch(err => {
+    if (err instanceof UniqueConstraintError) {
+      console.error("ERR:: USER not created! " + err.errors[0].message);
+    } else {
+      console.log(err);
+    }
+  });
+}

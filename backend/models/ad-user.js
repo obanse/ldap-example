@@ -3,12 +3,18 @@ const sequelize = require('../config/mysql_db');
 
 const AdUser = sequelize.define('AdUser', {
   // define attributes
+  objectSid: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
   cn: {
     type: DataTypes.STRING,
   },
   sAMAccountName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   sn: {
     type: DataTypes.STRING,
