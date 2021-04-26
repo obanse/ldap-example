@@ -1,5 +1,5 @@
 const { DataTypes, Deferrable } = require('sequelize');
-const sequelize = require('../db');
+const sequelize = require('../config/mysql_db');
 
 const AdUser = sequelize.define('AdUser', {
   // define attributes

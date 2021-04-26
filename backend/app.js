@@ -2,7 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require('./db');
+const sequelize = require('./config/mysql_db');
 const AdUser = require('./models/ad-user');
 
 // initialize express app
